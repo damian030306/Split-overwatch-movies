@@ -5,8 +5,149 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Split_overwatch_movies"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" MinHeight="200" Width="600" MinWidth="350"  >
     <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="100" MaxWidth="150"/>
+            <ColumnDefinition Width="*" MinWidth="250" />
+
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="20" MaxHeight="30"/>
+            <RowDefinition Height="*" MinHeight="45" MaxHeight="50"/>
+            <RowDefinition Height="*" MinHeight="150"/>
+            <RowDefinition Height="*" MinHeight="20" MaxHeight="40"/>
+        </Grid.RowDefinitions>
         
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#21204a"/>
+        <Button Grid.Row="1" Grid.Column="0" Name="TargetFolder"  Click="TargetFolder_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="103" >
+            <TextBlock TextAlignment="Center">"Move and<LineBreak/>split to:</TextBlock>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="BorderBrush" Value="#010775"/>
+                    <Setter Property="Background" Value="#387ee8"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#5f96e8"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="7" Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <TextBox Name="txtPath" Grid.Row="1" Grid.Column="1" Background="#80abed" Width="369" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0"  />
+
+        <Border Background="#0F0F2D" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+        <Border Background="#0F0F2D" Grid.Row="3" Grid.ColumnSpan="2"/>
+        <Border Grid.Row="2" Grid.Column="1" Background="#2c2a52"/>
+
+
+        <!---->
+
+        <Border Grid.Row="2" Background="Navy"/>
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" MinHeight="45"/>
+                <RowDefinition Height="*" MinHeight="45"/>
+                <RowDefinition Height="*" MinHeight="45"/>
+                <RowDefinition Height="*" MinHeight="45"/>
+                <RowDefinition Height="*" MinHeight="45"/>
+                <RowDefinition Height="*" MinHeight="45"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="#181735"/>
+            <Border Grid.Row="1" Background="#21204a"/>
+            <Border Grid.Row="2" Background="#181735"/>
+            <Border Grid.Row="3" Background="#21204a"/>
+            <Border Grid.Row="4" Background="#181735"/>
+            <Border Grid.Row="5" Background="#21204a"/>
+            
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Foreground="#4483db" HorizontalAlignment="Center">Start splitting from:</TextBlock>
+                <TextBox  Grid.Row="1" Grid.RowSpan="2" Name="number" TextAlignment="Center" PreviewTextInput="number_PreviewTextInput"  MinWidth="40" Width="74" Height="27" HorizontalAlignment="Center" VerticalAlignment="Center"  BorderBrush="#010775" Background="#80abed" Margin="38,0,38,0.5" ></TextBox>
+
+            </Grid>
+            
+            <Button Grid.Row="1" Name="FolderWithMovies" Click="FolderWithMovies_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="103"  Height="39">
+                <TextBlock>Choose folder <LineBreak/>with movies</TextBlock>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="BorderBrush" Value="#010775"/>
+                        <Setter Property="Background" Value="#387ee8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#5f96e8"/>
+                            </Trigger>
+                        </Style.Triggers>
+                       
+                        
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="12" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <!--<DataGrid Grid.Row=""></DataGrid>-->
+
+            
+
+        </Grid>
+        <DataGrid Grid.Row="2" Grid.Column="1" Name="MoviesList" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="MovieName" Binding="{Binding Path=.}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!--<Grid Background="LightBlue" Grid.Row="2" Grid.ColumnSpan="2"></Grid>
+        <Grid Background="DarkCyan" Grid.ColumnSpan="2"></Grid>
+        <Grid Grid.Row="1" Background="LightYellow"></Grid>
+        <Grid Grid.Row="1" Grid.Column="1" Background="Green"></Grid>-->
+        <!--<Grid>
+            
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBox PreviewTextInput="number_PreviewTextInput" Margin="95,36" MinWidth="40" Width="75" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left"  Name="number" Grid.Column="1"></TextBox>
+        <Button Content="Move and split to:" Name="TargetFolder" Click="TargetFolder_Click"  HorizontalAlignment="Left" Margin="42,36,0,0" VerticalAlignment="Top" Width="168" Grid.Row="1"/>
+        <Button Content="Choose folder with movies" Name="FolderWithMovies" Click="FolderWithMovies_Click"  HorizontalAlignment="Right" Margin="0,44,49,0" VerticalAlignment="Top" Width="168" Grid.Column="1" Grid.Row="1"/>
+        <TextBox Width="264" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0" Name="txtPath" Grid.Column="1" Grid.Row="2"/>
+        </Grid>-->
+        <!--<ListBox x:Name="MoviesList" Grid.Column="0" Grid.ColumnSpan="3" Width="772" HorizontalAlignment="Right" Margin="0,116,10,32">
+            <ListBox.ItemTemplate>
+                <DataTemplate >
+                    <CheckBox  Content="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>-->
+
     </Grid>
+
 </Window>
