@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Split_overwatch_movies"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" MinHeight="200" Width="600" MinWidth="350"  >
+        Title="MainWindow" Height="450" MinHeight="395" Width="600" MinWidth="350"  >
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -15,14 +15,15 @@
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" MinHeight="20" MaxHeight="30"/>
+            <RowDefinition Height="*" MinHeight="20" MaxHeight="40"/>
             <RowDefinition Height="*" MinHeight="45" MaxHeight="50"/>
-            <RowDefinition Height="*" MinHeight="150"/>
+            <RowDefinition Height="*" MinHeight="250"/>
             <RowDefinition Height="*" MinHeight="20" MaxHeight="40"/>
         </Grid.RowDefinitions>
-        
+
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#21204a"/>
-        <Button Grid.Row="1" Grid.Column="0" Name="TargetFolder"  Click="TargetFolder_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="103" >
+        <Button Grid.Row="1" Grid.Column="0" Name="TargetFolder"  Click="TargetFolder_Click"  HorizontalAlignment="Center" VerticalAlignment="Center"
+                Width="103" >
             <TextBlock TextAlignment="Center">"Move and<LineBreak/>split to:</TextBlock>
             <Button.Style>
                 <Style TargetType="Button">
@@ -45,7 +46,8 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <TextBox Name="txtPath" Grid.Row="1" Grid.Column="1" Background="#80abed" Width="369" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="30,0,0,0"  />
+        <TextBox Name="txtPath" Grid.Row="1" Grid.Column="1" Background="#80abed" Width="auto"  MinWidth="350" Margin="20,0,10,0" Height="30"
+                 VerticalAlignment="Center" HorizontalAlignment="Stretch"  IsEnabled="False"  />
 
         <Border Background="#0F0F2D" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
         <Border Background="#0F0F2D" Grid.Row="3" Grid.ColumnSpan="2"/>
@@ -59,8 +61,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" MinHeight="45"/>
                 <RowDefinition Height="*" MinHeight="45"/>
-                <RowDefinition Height="*" MinHeight="45"/>
-                <RowDefinition Height="*" MinHeight="45"/>
+                <RowDefinition Height="*" MinHeight="15"/>
+                <RowDefinition Height="*" MinHeight="15"/>
                 <RowDefinition Height="*" MinHeight="45"/>
                 <RowDefinition Height="*" MinHeight="45"/>
             </Grid.RowDefinitions>
@@ -70,7 +72,7 @@
             <Border Grid.Row="3" Background="#21204a"/>
             <Border Grid.Row="4" Background="#181735"/>
             <Border Grid.Row="5" Background="#21204a"/>
-            
+
             <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -81,7 +83,7 @@
                 <TextBox  Grid.Row="1" Grid.RowSpan="2" Name="number" TextAlignment="Center" PreviewTextInput="number_PreviewTextInput"  MinWidth="40" Width="74" Height="27" HorizontalAlignment="Center" VerticalAlignment="Center"  BorderBrush="#010775" Background="#80abed" Margin="38,0,38,0.5" ></TextBox>
 
             </Grid>
-            
+
             <Button Grid.Row="1" Name="FolderWithMovies" Click="FolderWithMovies_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="103"  Height="39">
                 <TextBlock>Choose folder <LineBreak/>with movies</TextBlock>
                 <Button.Style>
@@ -89,12 +91,26 @@
                         <Setter Property="BorderBrush" Value="#010775"/>
                         <Setter Property="Background" Value="#387ee8"/>
                         <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsKeyboardFocused" Value="True" />
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+
+                                    <Setter Property="Background" Value="#5f96e8"/>
+                                </MultiTrigger.Setters>
+                            </MultiTrigger>
+                            <!--<Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="#5f96e8"/>
-                            </Trigger>
+                            </Trigger>-->
+
                         </Style.Triggers>
-                       
-                        
+
+
+
+
                     </Style>
                 </Button.Style>
                 <Button.Template>
@@ -105,10 +121,57 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+            
+            <Button Grid.Row="5" Name="Move" Click="Move_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70"  Height="27" IsEnabled="False">
+                <TextBlock IsEnabled="False">Move</TextBlock>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="BorderBrush" Value="#010775"/>
+                        <Setter Property="Background" Value="#387ee8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#5f96e8"/>
+                            </Trigger>
+                        </Style.Triggers>
+
+
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="12" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Grid.Row="4" Name="ClearButton" Click="Clear_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70"  Height="27">
+                <TextBlock Text="Clear"/>
+                <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="BorderBrush" Value="#010775"/>
+                    <Setter Property="Background" Value="#387ee8"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#5f96e8"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="12" Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            </Button>
 
             <!--<DataGrid Grid.Row=""></DataGrid>-->
 
-            
+
 
         </Grid>
         <DataGrid Grid.Row="2" Grid.Column="1" Name="MoviesList" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserAddRows="False">
