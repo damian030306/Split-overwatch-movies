@@ -184,7 +184,7 @@ namespace Split_overwatch_movies
                 int j = 0;
                 
                 int startI = Int32.Parse(number.Text);
-                for (int i = startI; i < (((filesList.Count)/15) + startI + 1); i++)
+                for (int i = startI; i < (((filesList.Count+14)/15) + startI ); i++)
                 {
                     j++;
                     System.IO.Directory.CreateDirectory(txtPath.Text + @"\" + i);
@@ -193,7 +193,20 @@ namespace Split_overwatch_movies
                 foreach (string file in filesList)
                 {
 
-                    File.Move(file, destinationPath + @"\" + $"{(j/15) + startI}" + @"\" + System.IO.Path.GetFileName(file));
+                    
+                    if(TimeToFilename.IsChecked ?? true)
+                    {
+                        DateTime data = File.GetLastWriteTime(file);
+                        string dateTimeFromFile = data.ToString("HH_mm dd-MM-yy");
+                        string fileName = System.IO.Path.GetFileName(file).ToString();
+                        fileName = fileName.Remove(fileName.Length - 1 - 3, 4);
+                        File.Move(file, destinationPath + @"\" + $"{(j / 15) + startI}" + @"\" + fileName + " " + dateTimeFromFile + ".mp4");
+                        //File.Move(file, destinationPath + @"\" + $"{(j / 15) + startI}" + @"\" + System.IO.Path.GetFileName(file));
+                    }
+                    if (TimeToFilename.IsChecked ?? false)
+                    {
+                        //File.Move(file, destinationPath + @"\" + $"{(j / 15) + startI}" + @"\" + System.IO.Path.GetFileName(file));
+                    }
                     j++;
                 }
                 txtPath.Text = $"Moved {j} files";

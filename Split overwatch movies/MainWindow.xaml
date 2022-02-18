@@ -121,7 +121,11 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            
+            <CheckBox Name="TimeToFilename" Grid.Row="2" VerticalAlignment="Top" Margin="10,5,0,0">
+                
+            </CheckBox>
+            <TextBlock Grid.Row="2" Foreground="#4483db"   HorizontalAlignment="Center" Margin="30,5,17,43" Grid.RowSpan="2">Add LastTimeWrite <LineBreak/> to filename</TextBlock>
+
             <Button Grid.Row="5" Name="Move" Click="Move_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70"  Height="27" IsEnabled="False">
                 <TextBlock IsEnabled="False">Move</TextBlock>
                 <Button.Style>
