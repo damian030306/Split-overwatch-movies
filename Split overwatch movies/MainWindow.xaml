@@ -122,12 +122,29 @@
                 </Button.Template>
             </Button>
             <CheckBox Name="TimeToFilename" Grid.Row="2" VerticalAlignment="Top" Margin="10,5,0,0">
-                
-            </CheckBox>
-            <TextBlock Grid.Row="2" Foreground="#4483db"   HorizontalAlignment="Center" Margin="30,5,17,43" Grid.RowSpan="2">Add LastTimeWrite <LineBreak/> to filename</TextBlock>
 
-            <Button Grid.Row="5" Name="Move" Click="Move_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70"  Height="27" IsEnabled="False">
-                <TextBlock IsEnabled="False">Move</TextBlock>
+            </CheckBox>
+            <CheckBox Name="MoveToSeperateDir" Grid.Row="3" VerticalAlignment="Top" Margin="10,5,0,0">
+
+            </CheckBox>
+            <CheckBox Name="GenerateTimeStamps" Grid.Row="4" VerticalAlignment="Top" Margin="10,5,0,0">
+
+            </CheckBox>
+            <TextBlock Grid.Row="2" Foreground="#4483db"   HorizontalAlignment="Left" Margin="31,3,0,46" Grid.RowSpan="2">Add LastTimeWrite <LineBreak/> to filename</TextBlock>
+            <TextBlock Grid.Row="3" Foreground="#4483db"   HorizontalAlignment="Left" Margin="31,5,0,43" Grid.RowSpan="2">Move to <LineBreak/> seperate directory</TextBlock>
+            <TextBlock Grid.Row="4" Foreground="#4483db"   HorizontalAlignment="Left" Margin="26,4,0,44" Grid.RowSpan="2">Generate Time Stamps</TextBlock>
+            <TextBox  Grid.Row="4"  Name="StartTimeStamps" TextAlignment="Center" PreviewTextInput="StartTimeStamps_PreviewTextInput"  MinWidth="40" Width="74" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"  BorderBrush="#010775" Background="#80abed" Margin="0,20,0,0" ></TextBox>
+
+            <Button Grid.Row="5" Name="Move" Click="Move_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="70"  Height="27" IsEnabled="False" Margin="5,10,0,0">
+                <TextBlock IsEnabled="False" RenderTransformOrigin="0.5,0.5">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="1.417"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>Move</TextBlock>
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="BorderBrush" Value="#010775"/>
@@ -149,28 +166,28 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Grid.Row="4" Name="ClearButton" Click="Clear_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70"  Height="27">
+            <Button Grid.Row="5" Name="ClearButton" Click="Clear_Click"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="70"  Height="27" Margin="75,0,0,0">
                 <TextBlock Text="Clear"/>
                 <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="BorderBrush" Value="#010775"/>
-                    <Setter Property="Background" Value="#387ee8"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#5f96e8"/>
-                        </Trigger>
-                    </Style.Triggers>
+                    <Style TargetType="Button">
+                        <Setter Property="BorderBrush" Value="#010775"/>
+                        <Setter Property="Background" Value="#387ee8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#5f96e8"/>
+                            </Trigger>
+                        </Style.Triggers>
 
 
-                </Style>
-            </Button.Style>
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="12" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="12" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
 
             <!--<DataGrid Grid.Row=""></DataGrid>-->

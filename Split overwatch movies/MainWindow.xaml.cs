@@ -15,9 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
-
-
-
+using WMPLib;
+using System.Globalization;
 
 namespace Split_overwatch_movies
 {
@@ -35,7 +34,9 @@ namespace Split_overwatch_movies
             InitializeComponent();
             number.Text = "1";
             filesList = new List<string>();
-            
+            StartTimeStamps.Text = "00:00:00";
+
+
 
 
 
@@ -177,30 +178,63 @@ namespace Split_overwatch_movies
             Clear();
         }
 
+        private void StartTimeStamps_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("^[0-9]{1,2}:[0-5]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$");
+            e.Handled = regex.IsMatch(e.Text);
+
+        }
+            
+
         private void Move_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                var player = new WindowsMediaPlayer();
                 int j = 0;
                 
                 int startI = Int32.Parse(number.Text);
-                for (int i = startI; i < (((filesList.Count+14)/15) + startI ); i++)
+                if (MoveToSeperateDir.IsChecked ?? true)
                 {
-                    j++;
-                    System.IO.Directory.CreateDirectory(txtPath.Text + @"\" + i);
+                    for (int i = startI; i < (((filesList.Count + 14) / 15) + startI); i++)
+                    {
+                        j++;
+                        System.IO.Directory.CreateDirectory(txtPath.Text + @"\" + i);
+                    }
                 }
+                string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 j = 0;
-                foreach (string file in filesList)
+                string t = StartTimeStamps.Text;
+                CultureInfo provider = CultureInfo.InvariantCulture;
+                DateTime TimeStamps = DateTime.ParseExact(StartTimeStamps.Text.ToString(), "HH:mm:ss", provider);
+                //TimeStamps = DateTime.ParseExact("00:00:00", "HH:mm:SS", new CultureInfo("en-US", true));
+                using (StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine(destinationPath , "TimeStamps.txt")))
+                {
+
+                    
+
+
+                    foreach (string file in filesList)
                 {
 
                     
                     if(TimeToFilename.IsChecked ?? true)
                     {
                         DateTime data = File.GetLastWriteTime(file);
-                        string dateTimeFromFile = data.ToString("HH_mm dd-MM-yy");
+
+                        string dateTimeFromFile = data.ToString("HH.mm dd-MM-YY");
+                        string dateTimeFromFileReverse = data.ToString("yy-MM-dd HH.mm");
                         string fileName = System.IO.Path.GetFileName(file).ToString();
+                        
                         fileName = fileName.Remove(fileName.Length - 1 - 3, 4);
-                        File.Move(file, destinationPath + @"\" + $"{(j / 15) + startI}" + @"\" + fileName + " " + dateTimeFromFile + ".mp4");
+                        if(MoveToSeperateDir.IsChecked ?? true) 
+                            {
+                             File.Move(file, destinationPath + @"\" + $"{(j / 15) + startI}" + @"\" + fileName + " " + dateTimeFromFile + ".mp4");
+                        }else
+                        {
+                            File.Move(file, destinationPath + @"\" + dateTimeFromFileReverse + " " + fileName  + ".mp4");
+                        }
+                        
                         //File.Move(file, destinationPath + @"\" + $"{(j / 15) + startI}" + @"\" + System.IO.Path.GetFileName(file));
                     }
                     if (TimeToFilename.IsChecked ?? false)
@@ -208,7 +242,36 @@ namespace Split_overwatch_movies
                         //File.Move(file, destinationPath + @"\" + $"{(j / 15) + startI}" + @"\" + System.IO.Path.GetFileName(file));
                     }
                     j++;
+                    if(GenerateTimeStamps.IsChecked ?? true)
+                    {
+
+                      
+                        var clip = player.newMedia(file);
+                            DateTime data = File.GetLastWriteTime(file);
+                            string fileName = System.IO.Path.GetFileName(file).ToString();
+                            Match matchFileName = Regex.Match(fileName, "[0-9]{2}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}");
+                            if(matchFileName.Success == false)  
+                                {
+                                outputFile.WriteLine(TimeStamps.ToString("HH:mm:ss") + $" - {fileName.Substring(0, fileName.Length-4)}"); 
+                                }
+                            else
+                            {
+                                outputFile.WriteLine(TimeStamps.ToString("HH:mm:ss") + $" - {matchFileName.Value}");
+                            }
+                            
+                            TimeStamps += TimeSpan.FromMilliseconds(clip.);
+                            string t2 = clip.durationString;
+
+                        }
+
                 }
+                }
+                
+                if (GenerateTimeStamps.IsChecked ?? true)
+                {
+                    
+                }
+                
                 txtPath.Text = $"Moved {j} files";
                 txtPath.Foreground = Brushes.Black;
                 txtPath.Background = new SolidColorBrush(Color.FromRgb(128,237,215));
